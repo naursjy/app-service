@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Post extends Model
 {
@@ -19,7 +20,13 @@ class Post extends Model
         'image',
         'title',
         'content',
+        'user_id'
     ];
+
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class);
+    }
 
     /**
      * image
@@ -30,7 +37,7 @@ class Post extends Model
     protected function image(): Attribute
     {
         return Attribute::make(
-            get: fn ($image) => url('/storage/posts/' . $image),
+            get: fn($image) => url('/storage/posts/' . $image),
         );
     }
 }
